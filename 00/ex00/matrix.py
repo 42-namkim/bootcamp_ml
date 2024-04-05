@@ -106,7 +106,7 @@ class Vector(Matrix):
         elif isinstance(input, tuple):
             if not (input[0] == 1 or input[1] == 1):
                 raise ValueError("Vector must be a 1D tuple")
-        super().__init__(input)
+        super().__init__(input) # can't it work this way?
     
     def dot(self, other):
         if not isinstance(other, Vector):
@@ -114,3 +114,36 @@ class Vector(Matrix):
         if self.__shape != other.__shape:
             raise ValueError("Vectors have different shapes")
         return sum([[self.__data[i][j] * other.__data[j][i] for i in range(self.__shape[0])] for j in range(self.__shape[1])])
+    
+    def __add__(self, other):
+        return Vector(super().__add__(other).__data)
+
+    def __radd__(self, other):
+        return Vector(super().__radd__(other).__data)
+
+    def __sub__(self, other):
+        return Vector(super().__sub__(other).__data)
+
+    def __rsub__(self, other):
+        return Vector(super().__rsub__(other).__data)
+
+    def __mul__(self, other):
+        return Vector(super().__mul__(other).__data)
+
+    def __rmul__(self, other):
+        return Vector(super().__rmul__(other).__data)
+
+    def __truediv__(self, other):
+        return Vector(super().__truediv__(other).__data)
+
+    def __rtruediv__(self, other):
+        return Vector(super().__rtruediv__(other).__data)
+
+    def __str__(self) -> str:
+        return f"Vector({self.__data})"
+
+    # def __repr__(self) -> str:
+    #     return f"Vector({self.__data})"
+
+    def T(self):
+        return Vector(super().T().__data)
