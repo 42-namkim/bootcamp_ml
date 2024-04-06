@@ -28,22 +28,23 @@ class TinyStatistician:
             return None
         sorted_data = sorted(data)
         if len(sorted_data) % 2 == 0:
-            return (sorted_data[len(sorted_data) // 2] + sorted_data[len(sorted_data) // 2 - 1]) / 2
+            return float((sorted_data[len(sorted_data) // 2] + sorted_data[len(sorted_data) // 2 - 1]) / 2)
         else:
-            return sorted_data[len(sorted_data) // 2]
+            return float(sorted_data[len(sorted_data) // 2])
             
     def quartile(self, data):
         if not self.check_data(data):
             return None 
-        q1 = self.percentile(data, 25)
-        q3 = self.percentile(data, 75)
-        return (q1, q3)
+        sorted_data = sorted(data)
+        q1 = self.median(sorted_data[:(len(sorted_data) + 1) // 2])
+        q3 = self.median(sorted_data[len(sorted_data) // 2:])
+        return [q1, q3]
 
     def percentile(self, data, percent):
         if not self.check_data(data):
             return None
         sorted_data = sorted(data)
-        index = (percent / 100) * len(sorted_data)
+        index = (percent / 100) * (len(sorted_data) - 1)    #
         index_integer = int(index)
         index_decimal = index - index_integer
         if index_decimal == 0:
