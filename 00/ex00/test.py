@@ -13,6 +13,7 @@ def test_generate_vector():
     return v1, v2
 
 def test_matrix_method(m1, m2, m3):
+    print("------------------test matrix methods----------------------")
     # add
     print(m1 + m2)  # radd?
     
@@ -22,38 +23,52 @@ def test_matrix_method(m1, m2, m3):
     # mult
     print(m1 * m3)
     print(m3.__rmul__(m1))
-    #print(m2 * m1)
     print(m1 * 10)
     print(10 * m1)
 
     # truediv
-    #print(m1 / m2)
+    # print(m1 / m2)    //TypeError: Only Division by a number is supported
     print(m1 / 2)
     print(m1 / 0.5)
-    #print(m2 / 0)
-    #print(m1.__rtruediv__(10)) # TODO : check fix
+    # print(m2 / 0)
+    print(m1.__rtruediv__(10)) # TODO : check fix
     #m1[0][0] = 0
-    #print(m1.__rtruediv__(0))
+    print(m1.__rtruediv__(0))
+    print()
 
     #.T
+    print("-----------transpose-----------")
     print(m1)
     print(m2)
     print(m3)
-    print(m1.T) # <bound method Matrix.T of <matrix.Matrix object at 0x7fd2e417ffa0>> ??
-    print(m2.T)
-    print(m3.T)
+
+    print(m1.T())
+    print(m2.T())
+    print(m3.T())
+
+    print()
 
 def test_vector_method(v1, v2):
-    print(v1 * v2)
-    print(v2.__rmul__(v1))
+    print("------------------test vector methods----------------------")
+    v1.__str__()
+    v2.__str__()
+    print(v1 * v2)  # in fact it is the same as dot i guess..
     print(v1 * 10)
     print(v1 / 2)
-    print(v1.dot(v2)) # AttributeError: 'Vector' object has no attribute '_Vector__shape' ?
+    v3 = Vector([[3, 2, 1]])
+    print(v1.dot(v3))
 
-def test_matrix_vector_calculation(m1, m2, v1, v2):
-    print(m1 * v2)
+    print()
+
+def test_matrix_vector_calculation():
+    print("------------------test matrix and vector multiplication----------------------")
+    m1 = Matrix([[1, 2, 3],
+                [4, 5, 6]]) # 2 * 3
+    v1 = Vector([[1], [2], [3]]) # 3 * 1
+    v2 = Vector([[3, 2]]) # 1 * 2
+    print(m1 * v1)  # why it calls rmul?
     print(v2 * m1)
-    print(m3 * v1)
+    #print(v1 * v2) # it should generate Matrix; it is inconsistent with the project's definition..
 
 def test():
     # generate 2 * 3 matrixs and 3 * 2 matrix
@@ -64,6 +79,6 @@ def test():
 
     test_matrix_method(m1, m2, m3)
     test_vector_method(v1, v2)
-    test_matrix_vector_calculation(m1, m3, v1, v2)
+    test_matrix_vector_calculation()
 
 test()
